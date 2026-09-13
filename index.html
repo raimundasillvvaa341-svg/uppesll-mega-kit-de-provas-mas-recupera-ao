@@ -953,4 +953,177 @@
   </script>
 
 </body>
+</html> <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Confirmado | S.O.S Aula de Matemática</title>
+<meta name="description" content="Seu pedido foi confirmado. Você vai receber o S.O.S Aula de Matemática no seu e-mail ou pode baixar agora direto pelo Google Drive.">
+<meta name="robots" content="noindex">
+
+<style>
+
+  /* =========================================================
+     TOKENS DE DESIGN
+  ========================================================= */
+  :root{
+    --azul-escuro: #173B57;
+    --azul-medio:  #2878A9;
+    --azul-claro:  #EAF6FC;
+    --verde:       #2E9E5B;
+    --verde-escuro:#227A45;
+    --texto:       #2B4356;
+    --texto-suave: #5B7385;
+    --borda:       #D7E7F0;
+    --raio:        20px;
+    --sombra:      0 16px 40px rgba(23, 59, 87, 0.12);
+    --fonte-titulo: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --fonte-texto: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{ height: 100%; }
+
+  body{
+    margin: 0;
+    font-family: var(--fonte-texto);
+    color: var(--texto);
+    background: var(--azul-claro);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card{
+    background: #FFFFFF;
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 40px 26px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+    animation: entrada 0.6s ease forwards;
+  }
+
+  @keyframes entrada{
+    to{
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .icone-check{
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 22px auto;
+    border-radius: 50%;
+    background: var(--azul-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icone-check svg{
+    width: 34px;
+    height: 34px;
+  }
+
+  h1{
+    font-family: var(--fonte-titulo);
+    color: var(--azul-escuro);
+    font-size: 26px;
+    line-height: 1.3;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+  }
+
+  .texto-status{
+    font-size: 16px;
+    color: var(--texto-suave);
+    margin: 0 0 6px 0;
+  }
+
+  .texto-instrucao{
+    font-size: 15px;
+    color: var(--texto-suave);
+    margin: 18px 0 22px 0;
+  }
+
+  .btn-acessar{
+    display: block;
+    width: 100%;
+    padding: 20px 18px;
+    background: var(--verde);
+    color: #FFFFFF;
+    font-family: var(--fonte-texto);
+    font-weight: 700;
+    font-size: 17px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(46, 158, 91, 0.32);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .btn-acessar:hover{ background: var(--verde-escuro); }
+  .btn-acessar:active{ transform: scale(0.98); }
+
+  .texto-email{
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin: 16px 0 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card{
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .btn-acessar:hover, .btn-acessar:active{ transform: none; }
+  }
+
+  @media (min-width: 480px){
+    .card{ padding: 48px 40px; }
+    h1{ font-size: 28px; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- Ícone de confirmação -->
+    <div class="icone-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="#2E9E5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <h1>Pedido confirmado!</h1>
+    <p class="texto-status">Você vai receber o S.O.S Aula de Matemática no seu e-mail em instantes.</p>
+
+    <p class="texto-instrucao">Se preferir, baixe agora mesmo direto do Google Drive:</p>
+
+    <!-- Link fixo do Google Drive - não alterar -->
+    <a
+      href="https://drive.google.com/drive/folders/1vfrRA0bfadqu0Gyzkveq7Pw9CmOdulWg?usp=sharing"
+      class="btn-acessar"
+      target="_blank"
+      rel="noopener noreferrer"
+    >BAIXAR MATERIAL AGORA</a>
+
+    <p class="texto-email">Verifique também a caixa de spam, caso não encontre o e-mail.</p>
+
+  </div>
+
+</body>
 </html>
