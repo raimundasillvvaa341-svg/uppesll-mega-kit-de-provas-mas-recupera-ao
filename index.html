@@ -585,9 +585,92 @@
     .grade-materiais{ grid-template-columns: 1fr 1fr 1fr; }
   }
 
+  /* ---------- TELA DE OBRIGADO (embutida, aparece ao recusar o upsell) ---------- */
+  .tela-obrigado{
+    display: none; /* alternado para "flex" via JavaScript */
+    min-height: 100vh;
+    background: var(--azul-claro);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .obrigado-card{
+    background: #FFFFFF;
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 40px 26px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .obrigado-icone{
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 22px auto;
+    border-radius: 50%;
+    background: var(--azul-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .obrigado-icone svg{ width: 34px; height: 34px; }
+
+  .obrigado-card h1{ font-size: 26px; }
+
+  .obrigado-status{
+    font-size: 16px;
+    color: var(--texto-suave);
+    margin: 0 0 6px 0;
+  }
+
+  .obrigado-instrucao{
+    font-size: 15px;
+    color: var(--texto-suave);
+    margin: 18px 0 22px 0;
+  }
+
+  .obrigado-btn{
+    display: block;
+    width: 100%;
+    padding: 20px 18px;
+    background: var(--verde);
+    color: #FFFFFF;
+    font-family: var(--fonte-texto);
+    font-weight: 700;
+    font-size: 17px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(46, 158, 91, 0.32);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .obrigado-btn:hover{ background: var(--verde-escuro); }
+  .obrigado-btn:active{ transform: scale(0.98); }
+
+  .obrigado-email{
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin: 16px 0 0 0;
+  }
+
+  @media (min-width: 480px){
+    .obrigado-card{ padding: 48px 40px; }
+    .obrigado-card h1{ font-size: 28px; }
+  }
+
 </style>
 </head>
 <body>
+
+  <!-- =========================================================
+       PÁGINA DE VENDAS (tudo isto é ocultado quando a cliente
+       clica em "Não, obrigada" e a tela de obrigado aparece)
+  ========================================================== -->
+  <div id="pagina-venda">
 
   <!-- =========================================================
        SEÇÃO 1 — ALERTA DE UPSELL + HERO
@@ -899,8 +982,8 @@
 
       <a href="https://pay.cakto.com.br/3fg3k2e_1106053" class="btn btn-primario">QUERO ADICIONAR O MEGA KIT</a>
 
-      <!-- LINK DE RECUSA: aponta para obrigado.html. Publique os dois arquivos (index.html e obrigado.html) na mesma pasta do GitHub Pages, ou ajuste o caminho abaixo se usar outro nome/local -->
-      <a href="obrigado.html" class="link-recusa">Não, obrigada. Quero continuar somente com o S.O.S Aula de Matemática.</a>
+      <!-- Ao clicar, mostra a tela de obrigado embutida nesta mesma página (não depende de outro arquivo) -->
+      <a href="#" class="link-recusa" id="link-recusar-upsell">Não, obrigada. Quero continuar somente com o S.O.S Aula de Matemática.</a>
     </div>
   </section>
 
@@ -910,6 +993,39 @@
   <div class="cta-fixo" id="cta-fixo">
     <!-- Mesmo link de checkout dos demais botões (já configurado) -->
     <a href="https://pay.cakto.com.br/3fg3k2e_1106053" class="btn btn-primario">ADICIONAR POR R$27</a>
+  </div>
+
+  </div><!-- fim de #pagina-venda -->
+
+  <!-- =========================================================
+       TELA DE OBRIGADO (aparece quando a cliente recusa o upsell)
+  ========================================================== -->
+  <div id="pagina-obrigado" class="tela-obrigado">
+    <div class="obrigado-card reveal" id="card-obrigado">
+
+      <!-- Ícone de confirmação -->
+      <div class="obrigado-icone">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13l4 4L19 7" stroke="#2E9E5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1>Pedido confirmado!</h1>
+      <p class="obrigado-status">Você vai receber o S.O.S Aula de Matemática no seu e-mail em instantes.</p>
+
+      <p class="obrigado-instrucao">Se preferir, baixe agora mesmo direto do Google Drive:</p>
+
+      <!-- Link fixo do Google Drive - não alterar -->
+      <a
+        href="https://drive.google.com/drive/folders/1vfrRA0bfadqu0Gyzkveq7Pw9CmOdulWg?usp=sharing"
+        class="obrigado-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >BAIXAR MATERIAL AGORA</a>
+
+      <p class="obrigado-email">Verifique também a caixa de spam, caso não encontre o e-mail.</p>
+
+    </div>
   </div>
 
   <script>
@@ -949,181 +1065,26 @@
 
       window.addEventListener("scroll", verificarPosicao, { passive: true });
       verificarPosicao();
+
+      /* ---- Trocar para a tela de obrigado ao recusar o upsell ---- */
+      var linkRecusar = document.getElementById("link-recusar-upsell");
+      var paginaVenda = document.getElementById("pagina-venda");
+      var telaObrigado = document.getElementById("pagina-obrigado");
+      var cardObrigado = document.getElementById("card-obrigado");
+
+      if (linkRecusar && paginaVenda && telaObrigado){
+        linkRecusar.addEventListener("click", function(e){
+          e.preventDefault();
+          paginaVenda.style.display = "none";
+          telaObrigado.style.display = "flex";
+          window.scrollTo(0, 0);
+          requestAnimationFrame(function(){
+            cardObrigado.classList.add("visivel");
+          });
+        });
+      }
     })();
   </script>
-
-</body>
-</html> <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pedido Confirmado | S.O.S Aula de Matemática</title>
-<meta name="description" content="Seu pedido foi confirmado. Você vai receber o S.O.S Aula de Matemática no seu e-mail ou pode baixar agora direto pelo Google Drive.">
-<meta name="robots" content="noindex">
-
-<style>
-
-  /* =========================================================
-     TOKENS DE DESIGN
-  ========================================================= */
-  :root{
-    --azul-escuro: #173B57;
-    --azul-medio:  #2878A9;
-    --azul-claro:  #EAF6FC;
-    --verde:       #2E9E5B;
-    --verde-escuro:#227A45;
-    --texto:       #2B4356;
-    --texto-suave: #5B7385;
-    --borda:       #D7E7F0;
-    --raio:        20px;
-    --sombra:      0 16px 40px rgba(23, 59, 87, 0.12);
-    --fonte-titulo: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-    --fonte-texto: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-
-  *{ box-sizing: border-box; }
-
-  html, body{ height: 100%; }
-
-  body{
-    margin: 0;
-    font-family: var(--fonte-texto);
-    color: var(--texto);
-    background: var(--azul-claro);
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-
-  .card{
-    background: #FFFFFF;
-    border-radius: var(--raio);
-    box-shadow: var(--sombra);
-    padding: 40px 26px;
-    max-width: 440px;
-    width: 100%;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(14px) scale(0.98);
-    animation: entrada 0.6s ease forwards;
-  }
-
-  @keyframes entrada{
-    to{
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  .icone-check{
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 22px auto;
-    border-radius: 50%;
-    background: var(--azul-claro);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .icone-check svg{
-    width: 34px;
-    height: 34px;
-  }
-
-  h1{
-    font-family: var(--fonte-titulo);
-    color: var(--azul-escuro);
-    font-size: 26px;
-    line-height: 1.3;
-    margin: 0 0 12px 0;
-    font-weight: 700;
-  }
-
-  .texto-status{
-    font-size: 16px;
-    color: var(--texto-suave);
-    margin: 0 0 6px 0;
-  }
-
-  .texto-instrucao{
-    font-size: 15px;
-    color: var(--texto-suave);
-    margin: 18px 0 22px 0;
-  }
-
-  .btn-acessar{
-    display: block;
-    width: 100%;
-    padding: 20px 18px;
-    background: var(--verde);
-    color: #FFFFFF;
-    font-family: var(--fonte-texto);
-    font-weight: 700;
-    font-size: 17px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 14px;
-    box-shadow: 0 8px 20px rgba(46, 158, 91, 0.32);
-    transition: background 0.15s ease, transform 0.15s ease;
-  }
-
-  .btn-acessar:hover{ background: var(--verde-escuro); }
-  .btn-acessar:active{ transform: scale(0.98); }
-
-  .texto-email{
-    font-size: 13px;
-    color: var(--texto-suave);
-    margin: 16px 0 0 0;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .card{
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-    .btn-acessar:hover, .btn-acessar:active{ transform: none; }
-  }
-
-  @media (min-width: 480px){
-    .card{ padding: 48px 40px; }
-    h1{ font-size: 28px; }
-  }
-
-</style>
-</head>
-<body>
-
-  <div class="card">
-
-    <!-- Ícone de confirmação -->
-    <div class="icone-check">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5 13l4 4L19 7" stroke="#2E9E5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-
-    <h1>Pedido confirmado!</h1>
-    <p class="texto-status">Você vai receber o S.O.S Aula de Matemática no seu e-mail em instantes.</p>
-
-    <p class="texto-instrucao">Se preferir, baixe agora mesmo direto do Google Drive:</p>
-
-    <!-- Link fixo do Google Drive - não alterar -->
-    <a
-      href="https://drive.google.com/drive/folders/1vfrRA0bfadqu0Gyzkveq7Pw9CmOdulWg?usp=sharing"
-      class="btn-acessar"
-      target="_blank"
-      rel="noopener noreferrer"
-    >BAIXAR MATERIAL AGORA</a>
-
-    <p class="texto-email">Verifique também a caixa de spam, caso não encontre o e-mail.</p>
-
-  </div>
 
 </body>
 </html>
